@@ -79,16 +79,15 @@ namespace FilmesApi.Controllers
         [HttpPut("{id}")]
         public ActionResult<Filme> Put([FromRoute] int id, [FromBody] Filme filme)
         {
-            var filmeUpdate = _context.Filmes.Where(filme => filme.Id == id).FirstOrDefault();
-           
+            var filmeUpdate = _context.Filmes.Find(id);
+
             if (filmeUpdate != null)
             {
-                //var index = _context.Filmes.IndexOf(filmeUpdate);
-                //if (index != -1)
-                {
-                    //_context.Filmes[index] = filme;
-                }
-                _context.Filmes.Update(filme);
+                filmeUpdate.Nome = filme.Nome;
+                filmeUpdate.Duracao = filme.Duracao;
+                filmeUpdate.Diretor = filme.Diretor;
+                filmeUpdate.Genero = filme.Genero;
+                _context.Filmes.Update(filmeUpdate);
                 _context.SaveChanges();
                 return Ok(filme);
             }
@@ -108,16 +107,17 @@ namespace FilmesApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Filme> Delete(int id)
         {
-            Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id); 
+            var filmeDelete = _context.Filmes.Find(id); 
             
-            if (filme != null)
+            if (filmeDelete != null)
             {
-                MockFilmes.Filmes.Remove(filme);
+                _context.Filmes.Remove(filmeDelete);
+                _context.SaveChanges();
              
-                return NoContent();
+                return StatusCode(204);
             }
 
-            return NotFound();
+            return NotFound(new { erro = "Registro não encontrado" });
         }
     }
 }
