@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repositorios\\devinhouse\\M02\\M2S09\\FilmesApi\\FilmesApi.csproj": {}
+    "C:\\repositorios\\M02S09-Exercicios\\FilmesApi\\FilmesApi.csproj": {}
   },
   "projects": {
-    "C:\\repositorios\\devinhouse\\M02\\M2S09\\FilmesApi\\FilmesApi.csproj": {
+    "C:\\repositorios\\M02S09-Exercicios\\FilmesApi\\FilmesApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repositorios\\devinhouse\\M02\\M2S09\\FilmesApi\\FilmesApi.csproj",
+        "projectUniqueName": "C:\\repositorios\\M02S09-Exercicios\\FilmesApi\\FilmesApi.csproj",
         "projectName": "FilmesApi",
-        "projectPath": "C:\\repositorios\\devinhouse\\M02\\M2S09\\FilmesApi\\FilmesApi.csproj",
+        "projectPath": "C:\\repositorios\\M02S09-Exercicios\\FilmesApi\\FilmesApi.csproj",
         "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
-        "outputPath": "C:\\repositorios\\devinhouse\\M02\\M2S09\\FilmesApi\\obj\\",
+        "outputPath": "C:\\repositorios\\M02S09-Exercicios\\FilmesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,6 +43,26 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.8, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
