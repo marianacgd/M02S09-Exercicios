@@ -35,7 +35,7 @@
             <param name="id">Id do filme a ser atualizado no banco</param>
             <param name="filme">Objeto com os campos necessários para atualização de um filme</param>
             <returns>Sem conteúdo de retorno</returns>
-            <response code="204">Caso o id seja existente na base de dados e o filme tenha sido atualizado</response>
+            <response code="200">Caso o id seja existente na base de dados e o filme tenha sido atualizado</response>
             <response code="404">Caso o id seja inexistente na base de dados</response>
         </member>
         <member name="M:FilmesApi.Controllers.FilmesController.Delete(System.Int32)">
@@ -46,6 +46,18 @@
             <returns>Sem conteúdo de retorno</returns>
             <response code="204">Caso o id seja existente na base de dados e o filme tenha sido removido</response>
             <response code="404">Caso o id seja inexistente na base de dados</response>
+        </member>
+        <member name="T:FilmesApi.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:FilmesApi.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:FilmesApi.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:FilmesApi.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

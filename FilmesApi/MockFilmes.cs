@@ -2,7 +2,7 @@
 
 namespace FilmesApi
 {
-    public static class MockFilmes
+    public class MockFilmes
     {
         public static IList<Filme> Filmes = new List<Filme>()
         {

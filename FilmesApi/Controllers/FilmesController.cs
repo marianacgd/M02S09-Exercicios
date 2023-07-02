@@ -11,6 +11,13 @@ namespace FilmesApi.Controllers
     [ApiController]
     public class FilmesController : ControllerBase
     {
+        private readonly FilmesApiDbContext _context;
+
+        public FilmesController(FilmesApiDbContext context)
+        {
+            _context = context;
+        }
+
         /// <summary>
         /// Recupera uma lista de filmes do banco de dados
         /// </summary>
@@ -18,9 +25,9 @@ namespace FilmesApi.Controllers
         /// <response code="200">Com a lista de filmes presentes na base de dados</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public IEnumerable<Filme> Get()
+        public ActionResult<IEnumerable<Filme>> Get()
         {
-            return MockFilmes.Filmes;
+            return Ok(_context.Filmes);
         }
 
         /// <summary>
@@ -33,12 +40,12 @@ namespace FilmesApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public ActionResult<IEnumerable<Filme>> Get(int id)
         {
-            Filme filme = MockFilmes.Filmes.FirstOrDefault(x => x.Id == id);
-            if (filme is null)
+            var filme = _context.Filmes.Find(id);
+            if (filme == null)
             {
-                return NotFound();
+                return NotFound(new { erro = "Registro não encontrado" });
             }
           
             return Ok(filme);
@@ -52,10 +59,11 @@ namespace FilmesApi.Controllers
         /// <response code="201">Caso inserção seja feita com sucesso</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
-        public IActionResult Post([FromBody] Filme filme)
+        public ActionResult<Filme> Post([FromBody] Filme filme)
         {
-            MockFilmes.Filmes.Add(filme); 
-            return CreatedAtAction(nameof(Get), new { Id = filme.Id }, filme);
+            _context.Filmes.Add(filme);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(Post), filme);
         }
 
         /// <summary>
@@ -64,26 +72,28 @@ namespace FilmesApi.Controllers
         /// <param name="id">Id do filme a ser atualizado no banco</param>
         /// <param name="filme">Objeto com os campos necessários para atualização de um filme</param>
         /// <returns>Sem conteúdo de retorno</returns>
-        /// <response code="204">Caso o id seja existente na base de dados e o filme tenha sido atualizado</response>
+        /// <response code="200">Caso o id seja existente na base de dados e o filme tenha sido atualizado</response>
         /// <response code="404">Caso o id seja inexistente na base de dados</response>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Filme filme)
+        public ActionResult<Filme> Put([FromRoute] int id, [FromBody] Filme filme)
         {
-            Filme filmeUpdate = MockFilmes.Filmes.FirstOrDefault(filme => filme.Id == id);
+            var filmeUpdate = _context.Filmes.Where(filme => filme.Id == id).FirstOrDefault();
            
             if (filmeUpdate != null)
             {
-                var index = MockFilmes.Filmes.IndexOf(filmeUpdate);
-
-                if (index != -1)
-                    MockFilmes.Filmes[index] = filme;
-
-                return NoContent();
+                //var index = _context.Filmes.IndexOf(filmeUpdate);
+                //if (index != -1)
+                {
+                    //_context.Filmes[index] = filme;
+                }
+                _context.Filmes.Update(filme);
+                _context.SaveChanges();
+                return Ok(filme);
             }
 
-            return NotFound();
+            return NotFound(new { erro = "Registro não encontrado" });
         }
 
         /// <summary>
@@ -96,9 +106,9 @@ namespace FilmesApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ActionResult<Filme> Delete(int id)
         {
-            Filme filme = MockFilmes.Filmes.FirstOrDefault(filme => filme.Id == id); 
+            Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id); 
             
             if (filme != null)
             {
